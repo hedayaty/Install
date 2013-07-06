@@ -164,7 +164,7 @@ function installSubversion
 function installMultimedia
 {
 	if [ "X$InstallMultimedia" = "XT" ]; then
-		rpm -i http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-stable.noarch.rpm
+		yum -y install http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-stable.noarch.rpm
 		yum -y install gnome-mplayer ffmpeg
 		yum -y install  gstreamer-plugins-fc  gstreamer-plugins-espeak gstreamer-plugins-ugly gstreamer-plugins-bad gstreamer-ffmpeg
 		yum -y install audacious audacious-plugins*
@@ -175,7 +175,7 @@ function installMultimedia
 function installNvidia
 {
 	if [ "X$InstallNvidia" = "XT" ]; then
-		rpm -i http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-stable.noarch.rpm
+		yum -y install http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-stable.noarch.rpm
 		yum -y install akmod-nvidia xorg-x11-drv-nvidia  xorg-x11-drv-nvidia-libs.i686 xorg-x11-drv-nvidia-libs.x86_64
 		dracut -f /boot/initramfs-$(uname -r).img $(uname -r)
 		nvidia-xconfig
@@ -186,7 +186,7 @@ function installNvidia
 function installAMD
 {
 	if [ "X$InstallAMD" = "XT" ]; then
-		rpm -i http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-stable.noarch.rpm
+		yum -y install http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-stable.noarch.rpm
 		yum -y install akmod-catalyst xorg-x11-drv-catalyst xorg-x11-catalyst-libs xorg-x11-drv-catalyst-libs.i686
 		aticonfig --initial
 	fi
@@ -196,8 +196,8 @@ function installAMD
 function installFlash
 {
 	if [ "X$InstallFlash" = "XT" ]; then
-		yum install http://linuxdownload.adobe.com/adobe-release/adobe-release-x86_64-1.0-1.noarch.rpm
-		yum install flash-plugin
+		yum -y install http://linuxdownload.adobe.com/adobe-release/adobe-release-x86_64-1.0-1.noarch.rpm
+		yum -y install flash-plugin
 	fi
 }
 
@@ -221,7 +221,7 @@ END
 function installGoogleVoice
 {
 	if [ "X$InstallGoogleVoice" = "XT" ]; then
-		rpm -i http://dl.google.com/linux/direct/google-talkplugin_current_x86_64.rpm
+		yum -y install http://dl.google.com/linux/direct/google-talkplugin_current_x86_64.rpm
 		tempfile=`mktemp`
 		awk '/IGNORE_WRAP/{if ($0~"googletalk") print $0; else print gensub("\"", ":*libnpgoogletalk64*:*libnpgtpo3dautoplugin*\"","2") }  ! /IGNORE_WRAP/ {print }' /etc/sysconfig/nspluginwrapper > $tempfile
 		cp -f $tempfile /etc/sysconfig/nspluginwrapper
@@ -247,8 +247,7 @@ END
 function removeExtra
 {
 	if [ "X$RemoveExtra" = "XT" ]; then
-		rpm -e sendmail
-		rpm -e gnome-games
+		yum -y remove sendmail gnome-games
 	fi
 }
 
