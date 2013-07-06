@@ -5,10 +5,10 @@ InstallVim=T
 InstallGedit=T
 InstallEvince=T
 InstallManPages=T
-InstallGeany=T
-InstallStardict=T
+InstallGeany=F
+InstallStardict=F
 InstallEmulators=T
-InstallPidgin=T
+InstallPidgin=F
 InstallSeamoneky=T
 InstallGwibber=F
 InstallPino=F
@@ -16,7 +16,7 @@ InstallCommandLineHelpers=T
 InstallDocTools=T
 InstallSystools=T
 InstallLibreoffice=T
-InstallLatex=T
+InstallLatex=F
 InstallStellarium=T
 InstallCupsPdf=T
 InstallSubversion=T
@@ -28,7 +28,7 @@ InstallSkype=T
 InstallGoogleVoice=T
 InstallDropBox=T
 RemoveExtra=T
-Tuneup=T
+Tuneup=F
 InstallGnome3Addons=F
 
 #Add Sudoer
@@ -57,7 +57,7 @@ function installTools
 		yum -y install gedit-plugins
 	fi
 	if [ "X$InstallEvince" = "XT" ]; then
-		yum -y install evince-djvu evince-dvi
+		yum -y install evince-djvu
 	fi
 	if [ "X$InstallManPages" = "XT" ]; then
 		yum -y install man-pages
@@ -131,8 +131,7 @@ function installLO
 # Install Latex and related plugins
 function installLatex
 {
-	if [ "X$InstallLibreoffice" = "XT" ]; then
-		rpm -i http://jnovy.fedorapeople.org/texlive/2011/packages.fc16/texlive-release.noarch.rpm
+	if [ "X$InstallLatex" = "XT" ]; then
 		yum -y install texlive-scheme-tetex
 		if [ "X$InstallGedit" = "XT" ]; then	
 			yum -y install gedit-latex-plugin
@@ -145,6 +144,9 @@ function installLatex
 		fi
 		if [ "X$InstallGeany" = "XT" ]; then
 			yum -y install geany-plugins-geanylatex
+		fi
+		if [ "X$InstallEvince" = "XT" ]; then
+			yum -y install evince-dvi
 		fi
 	fi
 }
@@ -194,10 +196,9 @@ function installAMD
 function installFlash
 {
 	if [ "X$InstallFlash" = "XT" ]; then
-		curl http://download.macromedia.com/pub/labs/flashplatformruntimes/flashplayer11/flashplayer11_b2_install_lin_64_080811.tar.gz | tar -xz --exclude="usr*" -C /usr/lib64/mozilla/plugins
+		yum install http://linuxdownload.adobe.com/adobe-release/adobe-release-x86_64-1.0-1.noarch.rpm
+		yum install flash-plugin
 	fi
-#	rpm -i http://linuxdownload.adobe.com/adobe-release/adobe-release-i386-1.0-1.noarch.rpm
-#	yum -y install flash-plugin alsa-plugins-pulseaudio.i686 libcurl.i686 nspluginwrapper.i686
 }
 
 # Install Skype
