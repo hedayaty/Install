@@ -205,15 +205,8 @@ function installFlash
 function installSkype
 {
 	if [ "X$InstallSkype" ]; then
-		cat <<END > /etc/yum.repos.d/skype.repo
-[skype]
-name=Skype Repository
-baseurl=http://download.skype.com/linux/repos/fedora/updates/i586/
-gpgkey=http://gd.tuwien.ac.at/infosys/phone/skype/rpm-public-key.asc
-gpgcheck=0
-END
-		yum -y install skype
 		yum -y install alsa-lib.i686 libXv.i686 libXScrnSaver.i686 openssl.i686 qt.i686 qt-x11.i686
+		yum -y install http://download.skype.com/linux/skype-4.2.0.11-fedora.i586.rpm
 	fi
 }
 
