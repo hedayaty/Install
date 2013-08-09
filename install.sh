@@ -29,7 +29,7 @@ InstallGoogleVoice=T
 InstallDropBox=T
 RemoveExtra=T
 Tuneup=F
-InstallGnome3Addons=F
+InstallGnome3Addons=T
 
 #Add Sudoer
 function addSudoer
