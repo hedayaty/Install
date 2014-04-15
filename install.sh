@@ -17,19 +17,20 @@ InstallDocTools=T
 InstallSystools=T
 InstallLibreoffice=T
 InstallLatex=F
-InstallStellarium=T
+InstallStellarium=F
 InstallCupsPdf=T
-InstallSubversion=T
+InstallGit=T
 InstallMultimedia=T
 InstallNvidia=F
 InstallAMD=F
 InstallFlash=T
 InstallSkype=T
 InstallGoogleVoice=T
-InstallDropBox=T
+InstallDevel=T
 RemoveExtra=T
 Tuneup=F
 InstallGnome3Addons=T
+InstallTransmission=T
 
 #Add Sudoer
 function addSudoer
@@ -67,6 +68,9 @@ function installTools
 	fi
 	if [ "X$InstallCupsPdf" = "XT" ]; then
 		yum -y install cups-pdf 
+	fi
+  if [ "X$InstallTransmission" = "XT" ]; then
+		yum -y install transmission-gtk
 	fi
 }
 
@@ -152,11 +156,12 @@ function installLatex
 }
 
 
-# Install subversion and Devel Tools
-function installSubversion
+# Install Git
+function installGit
 {
-	if [ "X$InstallSubversion" = "XT" ]; then
-		yum -y install subversion mercurial cvs
+	VC=git
+	if [ "X$InstallGit" = "XT" ]; then
+		yum -y install git
 	fi
 }
 
@@ -222,20 +227,6 @@ function installGoogleVoice
 	fi
 }
 
-# Install DroopBox
-function installDropBox
-{
-	if [ "X$InstallDropBox" = "XT" ]; then
-		cat <<END > /etc/yum.repos.d/dropbox.repo
-[Dropbox]
-name=Dropbox Repository
-baseurl=http://linux.dropbox.com/fedora/14/
-gpgkey=http://linux.dropbox.com/fedora/rpm-public-key.asc
-END
-		yum -y install nautilus-dropbox 
-	fi
-}
-
 # And remove some extra packages
 function removeExtra
 {
@@ -281,7 +272,15 @@ END
 function installGnome3Addons
 {
 	if [ "X$InstallGnome3Addons" = "XT" ]; then
-		yum -y install gnome-tweak-tool gnome-shell-extensions-drive-menu gnome-shell-extensions-alternative-status-menu
+		yum -y install gnome-tweak-tool 
+#gnome-shell-extensions-drive-menu gnome-shell-extensions-alternative-status-menu
+	fi
+}
+
+function installDevel
+{
+	if [ "X$InstallDevel" = "XT" ]; then
+		yum install -y gcc make
 	fi
 }
 
@@ -295,16 +294,16 @@ installDocTools
 installSystools
 installLO
 installLatex
-installSubversion
+installGit
 installMultimedia
 installNvidia
 installAMD
 installFlash
 installSkype
 installGoogleVoice
-installDropBox
 removeExtra
 tuneup
 installGnome3Addons
+installDevel
 
 # vim: ts=2 sw=2
